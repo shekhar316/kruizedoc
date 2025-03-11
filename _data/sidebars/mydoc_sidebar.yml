@@ -24,12 +24,12 @@ entries:
     folderitems:
 
     - title: Introduction to Kruize
-      url: /mydoc_introduction.html
+      url: /index.html
       output: web, pdf
       type: homepage
 
     - title: Getting Started
-      url: /mydoc_start.html
+      url: /mydoc_introduction.html
       output: web, pdf
 
     - title: Experiment Modes 
