@@ -1,5 +1,5 @@
 ---
-title: Pages
+title: Create Experiment API
 last_updated: July 16, 2016
 summary: "This is quick guide instructions to create experiments using input JSON."
 sidebar: mydoc_sidebar
@@ -16,11 +16,11 @@ This is quick guide instructions to create experiments using input JSON as follo
 
 `curl -H 'Accept: application/json' -X POST --data 'copy paste below JSON' http://<URL>:<PORT>/createExperiment`
 
-<details>
 
-<summary><b>Example Request for datasource - `prometheus-1`</b></summary>
 
-### Example Request
+### Example Request for datasource - `prometheus-1`
+
+**Example Request**
 
 ```json
 [
@@ -59,21 +59,22 @@ This is quick guide instructions to create experiments using input JSON as follo
 ]
 ```
 
-</details>
 
-**Request with `experiment_type` field**
+### Example Request with `experiment_type` field
 
 The `experiment_type` field in the JSON is optional and can be used to
 indicate whether the experiment is of type `namespace` or `container`.
 If no experiment type is specified, it will default to `container`.
 
-<details>
-  <summary><b>Example Request with experiment_type - `namespace`</b></summary>
-  The `experiment_type` field in the JSON is optional and can be used to 
+
+### Example Request with experiment_type - `namespace`
+
+The `experiment_type` field in the JSON is optional and can be used to 
 indicate whether the experiment is of type `namespace` or `container`. 
 If no experiment type is specified, it will default to `container`.
 
-### EXAMPLE REQUEST
+**EXAMPLE REQUEST**
+
 ```json
 [{
   "version": "v2.0",
@@ -99,12 +100,12 @@ If no experiment type is specified, it will default to `container`.
   }
 }]
 ```
-</details>
 
-<details>
-  <summary><b>Example Request with experiment_type - `container`</b></summary>
 
-### EXAMPLE REQUEST
+### Example Request with experiment_type - `container`
+
+**EXAMPLE REQUEST**
+
 ```json
 [
   {
@@ -142,14 +143,9 @@ If no experiment type is specified, it will default to `container`.
   }
 ]
 ```
-</details>
 
-**Response**
 
-<details>
-<summary><b>Example Response</b></summary>
-
-### Example Response
+**Example Response**
 
 ```json
 {
@@ -159,6 +155,6 @@ If no experiment type is specified, it will default to `container`.
   "status": "SUCCESS"
 }
 ```
-</details>
+
 
 {% include links.html %}
