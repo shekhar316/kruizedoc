@@ -29,19 +29,19 @@ entries:
       type: homepage
 
     - title: Getting Started
-      url: /mydoc_introduction.html
+      url: /getting_started.html
       output: web, pdf
 
     - title: Experiment Modes 
-      url: /mydoc_supported_features.html
+      url: /experiment_modes.html
       output: web, pdf
 
     - title: Performance Profiles
-      url: /mydoc_about.html
+      url: /performance_profiles.html
       output: web, pdf
 
     - title: Support
-      url: /mydoc_support.html
+      url: /support.html
       output: web, pdf
 
   - title: Release Notes
@@ -61,11 +61,11 @@ entries:
     folderitems:
 
     - title: Remote Monitoring Mode
-      url: /mydoc_about_ruby_gems_etc.html
+      url: /rm_installation.html
       output: web, pdf
 
     - title: Local Monitoring Mode
-      url: /mydoc_install_jekyll_on_mac.html
+      url: /lm_installation.html
       output: web, pdf
 
 
@@ -74,7 +74,7 @@ entries:
 
     folderitems:
     - title: Create Experiment API
-      url: /mydoc_pages.html
+      url: /lm_create_exp.html
       output: web, pdf
 
     - title: List Experiments API
