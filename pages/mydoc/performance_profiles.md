@@ -7,4 +7,6 @@ folder: mydoc
 
 ## Performance Profiles 
 
+This page will contain information about performance profiles. Stay Tuned!
+
 {% include links.html %}

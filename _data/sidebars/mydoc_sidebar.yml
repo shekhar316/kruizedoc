@@ -74,7 +74,7 @@ entries:
       output: web, pdf
 
     - title: List Experiments API
-      url: /mydoc_posts.html
+      url: /lm_list_exp.html
       output: web, pdf
 
     - title: Generate Recommendations API

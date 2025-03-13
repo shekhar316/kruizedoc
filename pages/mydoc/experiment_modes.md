@@ -5,7 +5,7 @@ permalink: experiment_modes.html
 folder: mydoc
 ---
 
-Kruize currently supports three modes: monitor, auto, and recreate.
+Kruize currently supports three modes: `monitor`, `auto`, and `recreate`.
 
 - The monitor mode collects data and provides recommendations without making any changes.
 - The auto and recreate modes are currently identical, both used for autoscaling.

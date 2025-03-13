@@ -1,9 +1,7 @@
 ---
 title: Create Experiment API
-last_updated: July 16, 2016
-summary: "This is quick guide instructions to create experiments using input JSON."
 sidebar: mydoc_sidebar
-permalink: mydoc_pages.html
+permalink: lm_create_exp.html
 folder: mydoc
 ---
 

@@ -63,15 +63,17 @@ Refer [this](https://www.loom.com/share/d7ace86fddad43918f777835f70b743f?sid=247
 
 TFB (TechEmpower Framework Benchmarks) benchmark is simulated in different load conditions and below are the different recommendations observed from Kruize-Autotune.
 
-### IDLE 
+#### IDLE 
 - Experiment: `monitor_tfb-db_benchmark`
   - Shows an IDLE scenario where CPU recommendations are not generated due to minimal CPU usage (less than a millicore).
   ![idle](https://github.com/kusumachalasani/autotune-demo/assets/17760990/9e1505ca-6c75-4da7-a154-3c6ed3adf3ed)
-### Over Provision
+
+#### Over Provision
 - Experiment: `monitor_tfb_benchmark_multiple_import`
   - Highlights over-provisioning where CPU recommendations are lower than the current CPU requests. This scenario also demonstrates over-provisioning in memory usage.
   ![overprovision](https://github.com/kusumachalasani/autotune-demo/assets/17760990/9aac1d35-0e4b-44c6-b358-5eaf00c2852d)
-### Under Provision
+  
+#### Under Provision
 - Experiment: `monitor_tfb-db_benchmark_multiple_import`
   - Illustrates under-provisioning where CPU recommendations exceed the current CPU requests, suggesting adjustments for improved efficiency.
   ![underprovision](https://github.com/kusumachalasani/autotune-demo/assets/17760990/9005a59d-db4c-41b4-b170-90adf0fafff0)
