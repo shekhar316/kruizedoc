@@ -9,14 +9,13 @@
 
 @font-face {
     font-family: 'RedHatText';
-    src: url('/assets/fonts/MyCustomFont.woff2') format('woff2'),
-         url('/assets/fonts/MyCustomFont.woff') format('woff');
+    src: url('/fonts/RedHatText.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
 
 html {
-    font-family: sans-serif;
+    font-family: 'RedHatText', sans-serif;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%
 }

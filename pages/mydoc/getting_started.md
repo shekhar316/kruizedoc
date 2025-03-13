@@ -1,38 +1,119 @@
 ---
-title: Introduction
+title: Getting Started
 sidebar: mydoc_sidebar
-permalink: mydoc_introduction.html
+permalink: getting_started.html
 folder: mydoc
 ---
 
-## Overview
+## Local Monitoring with Kruize
 
-Kruize is a resource recommendation and autoscaling engine. It provides container and namespace right-sizing recommendations in Kubernetes in the form of CPU and memory requests and limits as well as MIG slicing recommendations for Nvidia accelerators. 
+Kruize Local provides services to generate recommendations for both single and bulk experiments.
 
-The recommendations are based on monitoring a data source such as Prometheus where the data source can be local or remote. The recommendations are based on resource usage in the past 24 hours (short term), 7 days (medium term) and 15 days (long term) and provide cost and performance-optimized suggestions for each term on a per container basis.Kruize also provides capacity and utilization data that can be used to represent resource request vs actual resource utilization data, for instance as a box plot, to better understand the recommendations.
+- **For Bulk Services**: For detailed instructions, refer [this guide](https://github.com/kruize/kruize-demos/tree/main/monitoring/local_monitoring/bulk_demo/README.md).
+- **For Demo of Individual Experiments**: Continue with the steps below.
+- **For Advanced Local Monitoring Options**: Explore advanced testing details [here](./ReadMe-advancedusers.md)
 
-## Modes of Operation
-### Right-sizing 
+### Prerequisites
+Ensure you have one of the clusters: kind, minikube, or openShift.
 
-In the right-sizing mode, Kruize is connected to a local or a remote data source such as prometheus / thanos and can provide right-sizing recommendations for containers and namespaces based on monitoring. The container right sizing includes CPU, Memory and Nvidia Accelerators. Namespace recommendations are in the form of hard limits for CPU and memory resources as part of the namespace quota. Right sizing for Nvidia accelerators are in the form of MIG (Multi Instance GPU) slices for those accelerators that support MIG (Eg A30, A100, H100 etc).
+### Getting Started with the Demo
 
-This mode has been productized and is the backend engine for Resource Optimization Service as part of RH Insights. This service is now available to all OCP customers. Slightly over one third of all OCP customers (~1000) are now using this service. (Tracked through the usage of the Cost Operator)
-Autoscaling
+To begin exploring local monitoring capabilities, follow these steps:
 
-In the autoscaling mode, Kruize integrates with autoscalers such as VPA (Vertical Pod Autoscaler) and Instaslice to apply the recommendations it generates. VPA is the default Kubernetes Pod autoscaler for vertical scaling. Instaslice is an IBM research project for Nvidia MIG partitioning that is currently being productized as part of OCP.
-VPA Integration
-Kruize uses VPA under the covers to apply CPU and memory right sizing recommendations. Kruize supports two modes “auto” and “recreate” that correspond to the modes of VPA with the same names. Kruize creates a custom VPA recommender object and pushes recommendations to this VPA object. This then gets picked up by VPA, which actually applies the recommendations.
+### Run the Demo
 
-### Instaslice Integration
-Kruize uses Instaslice under the covers to apply MIG slicing recommendations for Nvidia accelerators. In “auto” and “recreate” modes, if Kruize detects the presence of GPU metrics for accelerators that support MIG slicing, Kruize generates appropriate MIG slicing recommendations. This gets picked up by Instaslice which will then create the appropriate MIG partitioning scheme on the accelerator and assigns it to the container.
+##### Clone the demo repository:
+```sh
+git clone git@github.com:kruize/kruize-demos.git
+```
+##### Change directory to the local monitoring demo:
+```sh
+cd kruize-demos/monitoring/local_monitoring
+```
+***Note*** : We support `Kind`, `Minikube` and `Openshift` clusters.
+By default, it runs on the `Kind` cluster.
 
-Kruize Autoscaling is now available as an alpha level feature and is on track to be made available as a Day 2 operator on OCP (Expected 2H 2025)
+##### Execute the demo script on kind as: 
+```sh
+./local_monitoring_demo.sh
+```
+##### Execute the demo script in openshift as: 
+```sh
+./local_monitoring_demo.sh -c openshift
+```
 
-### AI - Autotune
+```
+Usage: ./local_monitoring_demo.sh [-s|-t] [-c cluster-type] [-f]
+c = supports minikube, kind and openshift cluster-type
+s = start (default), t = terminate
+f = create fresh environment setup if cluster-type is minikube or kind
+```
 
-Kruize supports “autotune” mode that addresses complex user defined performance objectives. In this mode, Kruize performs a series of trials with a different set of values for tunables associated with the application container until it can find the right set of values for the tunables that match the user provided performance goal. The user needs to capture the performance objective in the form of a Service Level Objective or SLO. Kruize uses Hyper Parameter Optimization or HPO algorithms that can help narrow down the values of the tunables to achieve the user provided objective. Kruize supports a broad range of tunables including at the container level, runtime level (Eg JVM) and framework level (Eg EAP and Quarkus)
+### Understanding the Demo
 
-Kruize Autotune is a PoC only feature. However this has been used by Perf and Scale teams to tune the OS (Node Tuning Operator (NTO) Profiles), Apache Kafka service tuning, by Quarkus to get better performance, and currently ongoing collaboration with EAP as part of a sustainability initiative.
+This demo covers the steps to install Kruize, create an experiment, and generate recommendations.
+- By default, it creates an experiment for a container which is long running in a cluster and generates recommendations for the same.
+- If user creates an environment set-up for minikube/kind, benchmark 'sysbench' is installed and that container is used to create experiment and generate recommendations.
+
+### Using kruize UI
+
+Refer [this](https://www.loom.com/share/d7ace86fddad43918f777835f70b743f?sid=2470c59e-e160-4dff-b664-83a925d6958c) video on how to create experiments and generate recommendations!
+
+### Recommendations for different load Simulations observed on Openshift
+
+TFB (TechEmpower Framework Benchmarks) benchmark is simulated in different load conditions and below are the different recommendations observed from Kruize-Autotune.
+
+### IDLE 
+- Experiment: `monitor_tfb-db_benchmark`
+  - Shows an IDLE scenario where CPU recommendations are not generated due to minimal CPU usage (less than a millicore).
+  ![idle](https://github.com/kusumachalasani/autotune-demo/assets/17760990/9e1505ca-6c75-4da7-a154-3c6ed3adf3ed)
+### Over Provision
+- Experiment: `monitor_tfb_benchmark_multiple_import`
+  - Highlights over-provisioning where CPU recommendations are lower than the current CPU requests. This scenario also demonstrates over-provisioning in memory usage.
+  ![overprovision](https://github.com/kusumachalasani/autotune-demo/assets/17760990/9aac1d35-0e4b-44c6-b358-5eaf00c2852d)
+### Under Provision
+- Experiment: `monitor_tfb-db_benchmark_multiple_import`
+  - Illustrates under-provisioning where CPU recommendations exceed the current CPU requests, suggesting adjustments for improved efficiency.
+  ![underprovision](https://github.com/kusumachalasani/autotune-demo/assets/17760990/9005a59d-db4c-41b4-b170-90adf0fafff0)
+
+
+## Kruize Remote Monitoring Demo
+
+### Goal
+The goal of this demo is to demonstrate the workflow of Kruize in Remote monitoring mode and project the recommendations generated by kruize on grafana dashboard. The [demo](./demo.py)  script creates experiments using the [Kruize Remote Monitoring REST APIs](https://github.com/kruize/autotune/tree/mvp_demo/design/MonitoringModeAPI.md) for the specified deployment in a namespace and updates the results containing the resource usage metrics for the deployment. It then fetches and displays the Kruize recommendations for each of the experiments created.
+
+### Steps
+This demo does the following:
+- Clones the required git repositories
+- Installs minikube and prometheus (If the cluster type is minikube)
+- Installs kruize and initializes the thanos and grafana containers
+- Creates an experiment by posting the input json to Kruize Monitoring REST APIs, updates the results for the experiments and fetches the Kruize recommendations
+- Metric results along with the recommendations are backfilled in thanos and launches grafana in the browser
+- User can login to grafana and search for pronosana-dashboard to view the cpu and memory recommendations provided by Kruize
+
+Note: The thanos and grafana related steps above will be invoked only on specifying --visualize option, which is yet to be implemented completely.
+
+### Pre-req
+To run the test on minikube cluster, it expects minikube to be installed with atleast 8 CPUs and 16384MB Memory.
+**WARNING:** The script deletes any existing minikube cluster.
+
+### How do I run it?
+
+```
+# Run the Kruize monitoring demo using the below command:
+$ ./remote_monitoring_demo.sh
+
+Where values for demo.py are:
+usage: ./remote_monitoring_demo.sh [ -c ] : cluster type. Supported types - minikube, openshift. Default is minikube
+                            [ -o ] : Kruize docker image, optional
+                            [ -u ] : Kruize UI image, optional
+                            
+# If you want to restart only kruize with the specified docker image
+$ ./remote_monitoring_demo.sh -r -o [kruize image]
+
+# To terminate the demo
+$ ./remote_monitoring_demo.sh -t
+```
 
 
 {% include links.html %}
